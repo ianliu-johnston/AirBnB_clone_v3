@@ -1,10 +1,8 @@
 # AirBnB Clone
+Recreation of the AirBnB site, from the back-end data management to the front-end user interface. Written in Python and MySQL.
 
-**Purpose**
-
-The purpose of this project is to recreate the AirBnB site, from the back-end data management to the front-end user interface. 
 <h4>Third Phase</h4>
-lala
+Description currently empty.
 
 <h4>second phase</h4>
 Command line interpretor can now save objects into a mysql database by setting the following environmental variables
@@ -17,6 +15,18 @@ Command line interpretor can now save objects into a mysql database by setting t
 
 <h4>first phase</h4>
 Where we are creating a command line interpretor to access objects that will store user data. Users can use the console to create objects, update object attributes, remove objects, list all objects, and store and read data from a .json file. 
+
+## Install Dependencies 
+1. Install MySql
+  a. ``MYSQL_APT=mysql-apt-config_0.8.3-1_all.deb``
+  b. ``wget https://dev.mysql.com/get/$MYSQL_APT``
+  c. ``sudo dpkg -i $MYSQL_APT``
+  d. ``sudo apt-get update``
+  e. ``sudo apt-get -y install mysql-server``
+2. Install python3 modules
+  a. ``sudo apt-get -y install python3-pip``
+  a. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
+  b. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
 
 ## Usage
 In order to begin the console, you can run either 'python3 console.py' or './console.py' in the command line.
@@ -36,12 +46,12 @@ Additionally, the console also supports the following command formats:
 * ``<class name>.show(<id>)``, whilch will display the instance with correct id and class;
 * ``<class name>.destroy(<id>)``, which will delete the instance with correct id and class;
 * ``<class name>.update(<id>, <attribute name>, <attribute value>)``, which will update an instance of the given class and id with the new attribute;
-* ``\<class name>.update(\<id>, \<dictionary representation>)``, which will update an instance of the given class and id with a dictionary of key value pairs that will be new attributes for the objects. 
-* ``\<class name>.create(<key>=<value>) create an instance of the class
+* ``<class name>.update(<id>, <dictionary representation>)``, which will update an instance of the given class and id with a dictionary of key value pairs that will be new attributes for the objects. 
+* ``<class name>.create(<key>=<value>) create an instance of the class
 
-##Authors
+## Authors
 * **Ian Liu-Johnston**, <ian.liu-johnson@holbertonschool.com>, @concativerse
-* **Philip Yoo**, <philip.yoo@holbertonschool.com>, @philipYoo10
-* **Jianqin Wang**, <jianqin.wang@holbertonschool.com>, @jianqinwang94
 * **Anne Cognet**, <anne.cognet@holbertonschool.com>, @1million40
 * **Richard Sim**, <richard.sim@holbertonschool.com>, @rdsim8589
+* **Philip Yoo**, <philip.yoo@holbertonschool.com>, @philipYoo10
+* **Jianqin Wang**, <jianqin.wang@holbertonschool.com>, @jianqinwang94
