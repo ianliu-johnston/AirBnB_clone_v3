@@ -18,15 +18,15 @@ Where we are creating a command line interpretor to access objects that will sto
 
 ## Install Dependencies 
 1. Install MySql
---a. ``MYSQL_APT=mysql-apt-config_0.8.3-1_all.deb``
---b. ``wget https://dev.mysql.com/get/$MYSQL_APT``
---c. ``sudo dpkg -i $MYSQL_APT``
---d. ``sudo apt-get update``
---e. ``sudo apt-get -y install mysql-server``
+..1. ``MYSQL_APT=mysql-apt-config_0.8.3-1_all.deb``
+..2. ``wget https://dev.mysql.com/get/$MYSQL_APT``
+..3. ``sudo dpkg -i $MYSQL_APT``
+..4. ``sudo apt-get update``
+..5. ``sudo apt-get -y install mysql-server``
 2. Install python3 modules
---a. ``sudo apt-get -y install python3-pip``
---b. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
---c. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
+..1. ``sudo apt-get -y install python3-pip``
+..2. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
+..3. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
 
 ## Usage
 In order to begin the console, you can run either 'python3 console.py' or './console.py' in the command line.
