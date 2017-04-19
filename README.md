@@ -17,13 +17,13 @@ Command line interpretor can now save objects into a mysql database by setting t
 Where we are creating a command line interpretor to access objects that will store user data. Users can use the console to create objects, update object attributes, remove objects, list all objects, and store and read data from a .json file. 
 
 ## Install Dependencies 
-1. Install MySql
+<h6>Install MySql</h6>
   1. ``MYSQL_APT=mysql-apt-config_0.8.3-1_all.deb``
   2. ``wget https://dev.mysql.com/get/$MYSQL_APT``
   3. ``sudo dpkg -i $MYSQL_APT``
   4. ``sudo apt-get update``
   5. ``sudo apt-get -y install mysql-server``
-2. Install python3 modules
+<h6>Install python3 modules</h6>
   1. ``sudo apt-get -y install python3-pip``
   2. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
   3. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
