@@ -54,8 +54,14 @@ Additionally, the console also supports the following command formats:
 * ``<class name>.create(<key>=<value>)`` create an instance of the class
 
 ## Authors
-* **Ian Liu-Johnston**, <ian.liu-johnson@holbertonschool.com>, @concativerse
+
+<h6>Phase 3</h6>
+* **Ian Liu-Johnston**, <ian.liu-johnson@holbertonschool.com>, Twitter: @concativerse
+
+<h6>Phase 2</h6>
 * **Anne Cognet**, <anne.cognet@holbertonschool.com>, @1million40
 * **Richard Sim**, <richard.sim@holbertonschool.com>, @rdsim8589
+
+<h6>Phase 1</h6>
 * **Philip Yoo**, <philip.yoo@holbertonschool.com>, @philipYoo10
 * **Jianqin Wang**, <jianqin.wang@holbertonschool.com>, @jianqinwang94
