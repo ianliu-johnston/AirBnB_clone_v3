@@ -57,18 +57,34 @@ class DBStorage:
         """
         self.__session.add(obj)
 
+    def get(self, cls, id):
+        """
+        gets an object of a certain kind of class
+        """
+        if cls not in self.__models_available[cls].keys():
+            return (None)
+        for class_instance in self.__session.query(self.__models_available[cls]):
+            if class_instance.__dict__['id'] == id:
+                return (class_instance)
+        return (None)
+
+
+    def count(self, cls=None):
+        """
+        counts the number of instances of a class (cls)
+        """
+        counter = 0
+        if cls is not None:
+            if self.__models_available.get(cls) is not None:
+                return(len(self.all(cls)))
+        else:
+            return(len(self.all()))
+
     def save(self):
         """
         saves the objects fom the current session
         """
         self.__session.commit()
-
-    def delete(self, obj=None):
-        """
-        deletes an object from the current session
-        """
-        if obj is not None:
-            self.__session.delete(obj)
 
     def reload(self):
         """
@@ -77,6 +93,14 @@ class DBStorage:
         """
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine))
+
+    def delete(self, obj=None):
+        """
+        deletes an object from the current session
+        """
+        if obj is not None:
+            self.__session.delete(obj)
+
 
     def close(self):
         """
