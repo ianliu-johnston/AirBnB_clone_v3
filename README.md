@@ -18,7 +18,7 @@ Where we are creating a command line interpretor to access objects that will sto
 
 ## Install Dependencies 
 
-<h6>Install MySql</h6>
+<h6>1. Install MySql</h6>
 
 1. ``MYSQL_APT=mysql-apt-config_0.8.3-1_all.deb``
 2. ``wget https://dev.mysql.com/get/$MYSQL_APT``
@@ -26,11 +26,18 @@ Where we are creating a command line interpretor to access objects that will sto
 4. ``sudo apt-get update``
 5. ``sudo apt-get -y install mysql-server``
 
-<h6>Install python3 modules</h6>
+<h6>2. Install python3 modules</h6>
 
 1. ``sudo apt-get -y install python3-pip``
 2. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
 3. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
+
+<h6>3. Fill the sql databases with example SQL data.</h6>
+1. ``cat "100-dump.sql" | mysql -uroot -hlocalhost -p``
+2. ``cat "10-dump.sql" | mysql -uroot -hlocalhost -p``
+3. ``cat "7-states_list.sql" | mysql -uroot -hlocalhost -p``
+4. ``cat "setup_mysql_dev.sql" | mysql -uroot -hlocalhost -p``
+5. ``cat "setup_mysql_test.sql" | mysql -uroot -hlocalhost -p``
 
 ## Usage
 In order to begin the console, you can run either 'python3 console.py' or './console.py' in the command line.
@@ -52,6 +59,12 @@ Additionally, the console also supports the following command formats:
 * ``<class name>.update(<id>, <attribute name>, <attribute value>)``, which will update an instance of the given class and id with the new attribute;
 * ``<class name>.update(<id>, <dictionary representation>)``, which will update an instance of the given class and id with a dictionary of key value pairs that will be new attributes for the objects. 
 * ``<class name>.create(<key>=<value>)`` create an instance of the class
+
+## Sample tests on the command-line
+Simple preliminary tests to see if the Flask app runs.
+```
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
+```
 
 ## Authors
 
