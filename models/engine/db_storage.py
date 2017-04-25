@@ -61,7 +61,7 @@ class DBStorage:
         """
         gets an object of a certain kind of class
         """
-        if cls not in self.__models_available[cls].keys():
+        if cls not in self.__models_available.keys():
             return (None)
         for class_instance in self.__session.query(self.__models_available[cls]):
             if class_instance.__dict__['id'] == id:

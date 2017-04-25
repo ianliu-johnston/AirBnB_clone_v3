@@ -68,6 +68,15 @@ class FileStorage:
         if obj is not None:
             FileStorage.__objects[obj.id] = obj
 
+    def get(self, cls, id):
+        if cls not in FileStorage.__objects.items() and cls is not None:
+            return("Great")
+        else:
+            return("Not there")
+
+    def count(self, cls=None):
+        return(filestorage.__objects.count())
+
     def save(self):
         """puts all the object to file after serializing them"""
         store = {}

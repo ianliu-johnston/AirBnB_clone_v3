@@ -3,15 +3,14 @@
 landing page for api
 """
 from api.v1.views import app_views
-from flask import Flask, jsonify
-import models
+from flask import jsonify
+from models import storage
 
 
 @app_views.route('/status')
 def app_status():
-    return(jsonify(status=OK))
+    return(jsonify(status="OK"))
 
-@app_views.route('/api/v1/stats')
-def status():
-
-    return(models.storage.count())
+@app_views.route('/stats')
+def app_get_count():
+    return(storage.count())
