@@ -42,6 +42,13 @@ class FileStorage:
                                    "State": State}
         self.reload()
 
+    @property
+    def available_classes(self):
+        """
+        Returns Available classes
+        """
+        return (self.__models_available)
+
     def all(self, cls=None):
         """
         Returns the required objects
@@ -53,9 +60,9 @@ class FileStorage:
             return FileStorage.__objects
         else:
             result = {}
-            for k, v in FileStorage.__objects.items():
-                if v.__class__.__name__ == cls:
-                    result[k] = v
+            for index, item in FileStorage.__objects.items():
+                if item.__class__.__name__ == cls:
+                    result[index] = item
             return result
 
     def new(self, obj):
@@ -69,13 +76,28 @@ class FileStorage:
             FileStorage.__objects[obj.id] = obj
 
     def get(self, cls, id):
-        if cls not in FileStorage.__objects.items() and cls is not None:
-            return("Great")
-        else:
-            return("Not there")
+        """
+        get an object from the json file
+        returns none if cls or id is not found in the json file
+        """
+        if cls not in FileStorage.__objects.items():
+            return(None)
+        for cls_instance in FileStorage.__objects.items():
+            if cls_instance['id'] == id:
+                return(class_instance)
+        return(None)
 
     def count(self, cls=None):
-        return(filestorage.__objects.count())
+        """
+        Count the number of objects that belong to a class
+        Defaults to None, which returns a
+        count of all objects in the json file
+        """
+        if cls is not None:
+            if cls in FileStorage.__objects.items():
+                return(len(self.all(cls)))
+        else:
+            return(len(self.all()))
 
     def save(self):
         """puts all the object to file after serializing them"""

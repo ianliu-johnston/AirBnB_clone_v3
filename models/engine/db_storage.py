@@ -35,6 +35,14 @@ class DBStorage:
         if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    @property
+    def available_classes(self):
+        """
+        Returns Available classes
+        """
+        return (self.__models_available)
+
+
     def all(self, cls=None):
         """
         returns a dictionary of all the class objects
@@ -73,7 +81,6 @@ class DBStorage:
         """
         counts the number of instances of a class (cls)
         """
-        counter = 0
         if cls is not None:
             if self.__models_available.get(cls) is not None:
                 return(len(self.all(cls)))

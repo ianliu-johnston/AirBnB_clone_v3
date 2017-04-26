@@ -13,7 +13,6 @@ Command line interpretor can now save objects into a mysql database by setting t
 * MySQL database:  ``HBNB_MYSQL_DB=hbnb_dev_db``
 * Storage type: ``HBNB_TYPE_STORAGE=db`` -- db is the only variable here. Any other option (including not set) will default to the storage type as a json object.
 
-HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./test_get_count.py
 
 <h4>First phase</h4>
 Where we are creating a command line interpretor to access objects that will store user data. Users can use the console to create objects, update object attributes, remove objects, list all objects, and store and read data from a .json file. 
@@ -45,6 +44,37 @@ Where we are creating a command line interpretor to access objects that will sto
 
 ### Types of interfaces
 
+#### Through Python directly:
+
+Example of Console Usage without a db:
+```
+~> python3
+Python 3.4.3 (default, Nov 17 2016, 01:08:31) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import models
+>>> s = models.State()
+>>> s.name = "Calveticus"
+>>> models.storage.new(s)
+>>> models.storage.save()
+>>> models.storage.count("State")
+>>> exit()
+~>
+```
+
+Example of Python usage directly with a db
+```
+~> HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./test_get_count.py
+Python 3.4.3 (default, Nov 17 2016, 01:08:31) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import models
+>>> models.storage.count("State")
+58
+>>> exit()
+~>
+```
+
 #### The Console
 ``console.py`` -- Command line interface to directly interact with databases, or object methods.
 In order to begin the console, you can run either ``python3 console.py`` or ``./console.py`` in the command line.
@@ -66,6 +96,7 @@ Additionally, the console also supports the following command formats:
 * ``<class name>.create(<key>=<value>)`` create an instance of the class
 
 Classes that are currently supported include BaseModel, User, City, State, Amenity, Review, and Place.
+
 
 #### API Access
 * API -- interaction with the objects through HTTP GET requests
