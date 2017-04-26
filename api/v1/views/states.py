@@ -55,9 +55,11 @@ def state_by_id(state_id=None):
         except:
             return("Not a JSON", 400)
         instance = storage.get('State', state_id)
-        lala
+        for attrib in put_obj:
+            setattr(instance, attrib, put_obj[attrib])
         instance.save()
         return(jsonify(instance.to_json()))
+
     """Default: GET request returns the object in json form"""
     instance = storage.get('State', state_id)
     return(jsonify(instance.to_json()))
