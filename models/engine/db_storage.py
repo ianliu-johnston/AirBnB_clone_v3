@@ -42,7 +42,6 @@ class DBStorage:
         """
         return (self.__models_available)
 
-
     def all(self, cls=None):
         """
         returns a dictionary of all the class objects
@@ -71,11 +70,11 @@ class DBStorage:
         """
         if cls not in self.__models_available.keys():
             return (None)
-        for class_instance in self.__session.query(self.__models_available[cls]):
+        for class_instance in self.__session.query(
+                self.__models_available[cls]):
             if class_instance.__dict__['id'] == id:
                 return (class_instance)
         return (None)
-
 
     def count(self, cls=None):
         """
@@ -107,7 +106,6 @@ class DBStorage:
         """
         if obj is not None:
             self.__session.delete(obj)
-
 
     def close(self):
         """
