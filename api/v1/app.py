@@ -12,12 +12,14 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_flask(exception):
     """
     Remove the database, exit and save file
     """
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(error):
