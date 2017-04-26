@@ -100,7 +100,9 @@ class FileStorage:
             return(len(self.all()))
 
     def save(self):
-        """puts all the object to file after serializing them"""
+        """
+        Saves objects to a json formatted file
+        """
         store = {}
         for k in FileStorage.__objects.keys():
             store[k] = FileStorage.__objects[k].to_json()
