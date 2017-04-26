@@ -6,12 +6,14 @@ from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
+
 @app_views.route('/status')
 def app_status():
     """
     Simply returns the state of the api.
     """
     return(jsonify(status="OK"))
+
 
 @app_views.route('/stats')
 def app_get_count():
@@ -25,5 +27,5 @@ def app_get_count():
             string = string[0:-1] + "ies"
         else:
             string += "s"
-        tojson.update({ string : storage.count(cls) })
+        tojson.update({string: storage.count(cls)})
     return(jsonify(tojson))
