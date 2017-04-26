@@ -2,18 +2,19 @@
 Recreation of the AirBnB site, from the back-end data management to the front-end user interface. Written in Python and MySQL.
 
 <h4>Third Phase</h4>
-Description currently empty.
+Developing an api to interface with the database.
 
-<h4>second phase</h4>
-Command line interpretor can now save objects into a mysql database by setting the following environmental variables
+<h4>Second phase</h4>
+Command line interpretor can now save objects into a mysql database by setting the following environmental variables. Not setting these variables defaults to using a json file. Listed below are the values for the example database:
 
-* MySQL user = <HBNB_MYSQL_USER>
-* MySQL password = <HBNB_MYSQL_PWD>
-* MySQL host = <HBNB_MYSQL_HOST> (typically = localhost)
-* MySQL database = HBNB_MYSQL_DB
-* HBNB_TYPE_STORAGE = db
+* MySQL user: ``HBNB_MYSQL_USER=hbnb_dev``
+* MySQL password: ``HBNB_MYSQL_PWD=hbnb_dev_pwd``
+* MySQL host: ``HBNB_MYSQL_HOST=localhost``
+* MySQL database:  ``HBNB_MYSQL_DB=hbnb_dev_db``
+* Storage type: ``HBNB_TYPE_STORAGE=db`` -- db is the only variable here. Any other option (including not set) will default to the storage type as a json object.
 
-<h4>first phase</h4>
+
+<h4>First phase</h4>
 Where we are creating a command line interpretor to access objects that will store user data. Users can use the console to create objects, update object attributes, remove objects, list all objects, and store and read data from a .json file. 
 
 ## Install Dependencies 
@@ -32,7 +33,7 @@ Where we are creating a command line interpretor to access objects that will sto
 2. ``sudo apt-get -y install python3-dev libmysqlclient-dev``
 3. ``sudo -H pip3 install mysqlclient sqlalchemy Flask pep8``
 
-<h6>3. Fill the sql databases with example SQL data.</h6>
+<h6>3. (Optional) Fill the sql databases with example SQL data.</h6>
 1. ``cat "100-dump.sql" | mysql -uroot -hlocalhost -p``
 2. ``cat "10-dump.sql" | mysql -uroot -hlocalhost -p``
 3. ``cat "7-states_list.sql" | mysql -uroot -hlocalhost -p``
@@ -40,9 +41,43 @@ Where we are creating a command line interpretor to access objects that will sto
 5. ``cat "setup_mysql_test.sql" | mysql -uroot -hlocalhost -p``
 
 ## Usage
-In order to begin the console, you can run either 'python3 console.py' or './console.py' in the command line.
 
-Classes that are currently supported include BaseModel, User, City, State, Amenity, Review, and Place.
+### Types of interfaces
+
+#### Through Python directly:
+
+Example of Console Usage without a db:
+```
+~> python3
+Python 3.4.3 (default, Nov 17 2016, 01:08:31) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import models
+>>> s = models.State()
+>>> s.name = "Calveticus"
+>>> models.storage.new(s)
+>>> models.storage.save()
+>>> models.storage.count("State")
+>>> exit()
+~>
+```
+
+Example of Python usage directly with a db
+```
+~> HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./test_get_count.py
+Python 3.4.3 (default, Nov 17 2016, 01:08:31) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import models
+>>> models.storage.count("State")
+58
+>>> exit()
+~>
+```
+
+#### The Console
+``console.py`` -- Command line interface to directly interact with databases, or object methods.
+In order to begin the console, you can run either ``python3 console.py`` or ``./console.py`` in the command line.
 
 The console currently supports the following commands:
 * ``create <class name>``, which will create an object of the class declared by user;
@@ -60,7 +95,22 @@ Additionally, the console also supports the following command formats:
 * ``<class name>.update(<id>, <dictionary representation>)``, which will update an instance of the given class and id with a dictionary of key value pairs that will be new attributes for the objects. 
 * ``<class name>.create(<key>=<value>)`` create an instance of the class
 
+Classes that are currently supported include BaseModel, User, City, State, Amenity, Review, and Place.
+
+
+#### API Access
+* API -- interaction with the objects through HTTP GET requests
+
+#### Front End Webserver
+* Front end -- Website to display 
+
+
 ## Sample tests on the command-line
+Check to see if the count method works with the ``test_get_count.py`` script.
+```
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./test_get_count.py
+```
+
 Simple preliminary tests to see if the Flask app runs.
 ```
 HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app

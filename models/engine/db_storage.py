@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-from os import getenv
 from models.base_model import Base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import (sessionmaker, scoped_session)
+from os import getenv
 from models.user import User
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from sqlalchemy import create_engine
-from sqlalchemy.orm import (sessionmaker, scoped_session)
 """
 This is the db_storage module
 """
@@ -34,6 +34,13 @@ class DBStorage:
                                    "State": State}
         if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
+
+    @property
+    def available_classes(self):
+        """
+        Returns Available classes
+        """
+        return (self.__models_available)
 
     def all(self, cls=None):
         """
@@ -61,19 +68,18 @@ class DBStorage:
         """
         gets an object of a certain kind of class
         """
-        if cls not in self.__models_available[cls].keys():
+        if cls not in self.__models_available.keys():
             return (None)
-        for class_instance in self.__session.query(self.__models_available[cls]):
+        for class_instance in self.__session.query(
+                self.__models_available[cls]):
             if class_instance.__dict__['id'] == id:
                 return (class_instance)
         return (None)
-
 
     def count(self, cls=None):
         """
         counts the number of instances of a class (cls)
         """
-        counter = 0
         if cls is not None:
             if self.__models_available.get(cls) is not None:
                 return(len(self.all(cls)))
@@ -92,7 +98,7 @@ class DBStorage:
         be in the init method
         """
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(bind=self.__engine))
+        self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
 
     def delete(self, obj=None):
         """
@@ -100,7 +106,6 @@ class DBStorage:
         """
         if obj is not None:
             self.__session.delete(obj)
-
 
     def close(self):
         """
