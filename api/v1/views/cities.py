@@ -26,8 +26,9 @@ def city_by_state(state_id=None):
             return("Not a JSON", 400)
         if 'name' not in post_obj:
             return("Missing name", 400)
-        new_obj = State(**posted_obj)
-        storage.save()
+        new_obj = City(**post_obj)
+        new_obj.state_id = state_id
+        new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
 
     """Default: GET request returns the object in json form"""
