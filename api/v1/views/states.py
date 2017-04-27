@@ -11,8 +11,9 @@ from flask import (request, jsonify, abort)
                  strict_slashes=False)
 def all_states():
     """
-    Adds new State objects, if provided with a name parameter in a POST request
-    Default is to Returns a list of all states in json format for GET requests
+    Access the api call on all state objects
+    - POST: Adds a new State object. Requires name parameter.
+    - GET: Default, returns a list of all states
     """
     if request.method == 'POST':
         posted_obj = request.get_json()
@@ -24,6 +25,7 @@ def all_states():
         storage.save()
         return(jsonify(new_obj.to_json()), 201)
 
+    """ Default: GET"""
     rtn_json = []
     all_obj = storage.all('State')
     for instance in all_obj:
@@ -38,8 +40,9 @@ def state_by_id(state_id=None):
     """
     Access the api call with on a specific state object
     returns a 404 if not found.
-    Delete method removes the object
-    Defaults is to return the state object.
+    - DELETE: Removes the state object
+    - PUT: Updates the state object
+    - GET: Default, return the state object.
     """
     if state_id not in storage.all('State'):
         abort(404)
@@ -59,6 +62,6 @@ def state_by_id(state_id=None):
         instance.save()
         return(jsonify(instance.to_json()))
 
-    """Default: GET request returns the object in json form"""
+    """ Default: GET"""
     instance = storage.get('State', state_id)
     return(jsonify(instance.to_json()))

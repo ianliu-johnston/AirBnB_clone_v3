@@ -13,11 +13,10 @@ def city_by_state(state_id=None):
     """
     Access the api call with on a state object to get its cities
     returns a 404 if not found.
-    POST alala
-    Defaults is to return the state object.
+    - POST: Creates a new city object with the state_object linked
+    - GET: Default, returns all city objects linked to the state.
     """
     if state_id not in storage.all('State'):
-        print("Invalid ID")
         abort(404)
 
     if request.method == 'POST':
@@ -31,7 +30,7 @@ def city_by_state(state_id=None):
         new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
 
-    """Default: GET request returns the object in json form"""
+    """Default: GET"""
     all_cities = storage.get('State', state_id).cities
     rtn_json = []
     for city in all_cities:
@@ -39,34 +38,22 @@ def city_by_state(state_id=None):
     return(jsonify(rtn_json))
 
 
-"""
 @app_views.route('/cities/<city_id>',
-                 methods=['GET', 'POST'],
+                 methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def all_cities():
-    Adds new State objects, if provided with a name parameter in a POST request
-    Default is to Returns a list of all states in json format for GET requests
-    if request.method == 'POST':
-        posted_obj = request.get_json()
-        if posted_obj is None:
-            return("Not a JSON", 400)
-        if 'name' not in posted_obj:
-            return("Missing name", 400)
-        new_obj = State(**posted_obj)
-        storage.save()
-        return(jsonify(new_obj.to_json()), 201)
-
-    rtn_json = []
-    all_obj = storage.all('State')
-    for instance in all_obj:
-        rtn_json.append(all_obj[instance].to_json())
-    return (jsonify(rtn_json))
-
-
-
+def get_city_obj(city_id=None):
+    """
+    API call to interact with a specific city object
+    returns a 404 if city_id is not found.
+    - DELETE method: Deletes the resource and returns {}, status 200
+    - PUT method: Updates the resource with the supplied json, status 201
+    - GET method: Default, returns the city object
+    """
+    if city_id not in storage.all('City'):
+        abort(404)
 
     if request.method == 'DELETE':
-        storage.delete(storage.get('State', state_id))
+        storage.delete(storage.get('City', city_id))
         storage.save()
         return(jsonify({}))
 
@@ -74,9 +61,12 @@ def all_cities():
         put_obj = request.get_json()
         if put_obj is None:
             return("Not a JSON", 400)
-        instance = storage.get('State', state_id)
+        instance = storage.get('City', city_id)
         for attrib in put_obj:
             setattr(instance, attrib, put_obj[attrib])
         instance.save()
         return(jsonify(instance.to_json()))
-"""
+
+    """ Default: GET """
+    city_get = storage.get('City', city_id)
+    return(jsonify(city_get.to_json()))

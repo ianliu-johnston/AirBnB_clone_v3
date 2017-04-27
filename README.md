@@ -58,13 +58,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> models.storage.new(s)
 >>> models.storage.save()
 >>> models.storage.count("State")
+1
 >>> exit()
 ~>
 ```
 
 Example of Python usage directly with a db
 ```
-~> HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./test_get_count.py
+~> HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3
 Python 3.4.3 (default, Nov 17 2016, 01:08:31) 
 [GCC 4.8.4] on linux
 Type "help", "copyright", "credits" or "license" for more information.
