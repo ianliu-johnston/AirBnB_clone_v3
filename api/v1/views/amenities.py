@@ -5,6 +5,7 @@ Amenitys module to interface with the API
 from api.v1.views import (app_views, Amenity, storage)
 from flask import (request, jsonify, abort)
 
+
 @app_views.route('/amenities',
                  methods=['GET', 'POST'],
                  strict_slashes=False)
