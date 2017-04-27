@@ -69,7 +69,6 @@ class DBStorage:
         gets an object of a certain kind of class
         """
         if cls not in self.__models_available.keys():
-            print("ERROR: {:s} is not an available class".format(type(cls).__name__))
             return (None)
         for class_instance in self.__session.query(
                 self.__models_available[cls]):
