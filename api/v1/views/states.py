@@ -20,7 +20,7 @@ def all_states():
         except:
             return("Not a JSON", 400)
         if 'name' not in posted_obj:
-            return("Missing Name", 400)
+            return("Missing name", 400)
         new_obj = State(**posted_obj)
         storage.save()
         return(jsonify(new_obj.to_json()), 201)
@@ -63,7 +63,3 @@ def state_by_id(state_id=None):
     """Default: GET request returns the object in json form"""
     instance = storage.get('State', state_id)
     return(jsonify(instance.to_json()))
-"""
-Update the State object with all key-value pairs of the dictionary.
-Ignore keys: id, created_at and updated_at
-"""
