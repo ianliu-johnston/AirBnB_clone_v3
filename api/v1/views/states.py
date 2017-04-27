@@ -15,9 +15,8 @@ def all_states():
     Default is to Returns a list of all states in json format for GET requests
     """
     if request.method == 'POST':
-        try:
-            posted_obj = request.get_json()
-        except:
+        posted_obj = request.get_json()
+        if posted_obj is None:
             return("Not a JSON", 400)
         if 'name' not in posted_obj:
             return("Missing name", 400)
@@ -47,12 +46,12 @@ def state_by_id(state_id=None):
 
     if request.method == 'DELETE':
         storage.delete(storage.get('State', state_id))
+        storage.save()
         return(jsonify({}))
 
     if request.method == 'PUT':
-        try:
-            put_obj = request.get_json()
-        except:
+        put_obj = request.get_json()
+        if put_obj is None:
             return("Not a JSON", 400)
         instance = storage.get('State', state_id)
         for attrib in put_obj:
