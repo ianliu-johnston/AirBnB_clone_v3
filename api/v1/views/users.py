@@ -2,7 +2,7 @@
 """
 Users module to interface with the API
 """
-from api.v1.views import (app_views, State, storage)
+from api.v1.views import (app_views, User, storage)
 from flask import (request, jsonify, abort)
 
 
@@ -11,23 +11,30 @@ from flask import (request, jsonify, abort)
                  strict_slashes=False)
 def all_users():
     """
-    Adds new State objects, if provided with a name parameter in a POST request
+    Adds new User objects, if provided with a name parameter in a POST request
     Default is to Returns a list of all users in json format for GET requests
     """
+    all_users = storage.all('User')
     if request.method == 'POST':
         posted_obj = request.get_json()
         if posted_obj is None:
             return("Not a JSON", 400)
-        if 'name' not in posted_obj:
-            return("Missing name", 400)
-        new_obj = State(**posted_obj)
-        storage.save()
+        if 'email' not in posted_obj.keys():
+            return("Missing email", 400)
+        if 'password' not in posted_obj.keys():
+            return("Missing password", 400)
+        # linear search through users to see if email is in db already
+        for user in all_users:
+            email_in_db = getattr(all_users.get(user), 'email')
+            if posted_obj['email'] == email_in_db:
+                return("ERROR: Email is already registered", 400)
+        new_obj = User(**posted_obj)
+        new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
 
     rtn_json = []
-    all_obj = storage.all('State')
-    for instance in all_obj:
-        rtn_json.append(all_obj[instance].to_json())
+    for instance in all_users:
+        rtn_json.append(all_users[instance].to_json())
     return (jsonify(rtn_json))
 
 
@@ -41,11 +48,11 @@ def user_by_id(user_id=None):
     Delete method removes the object
     Defaults is to return the user object.
     """
-    if user_id not in storage.all('State'):
+    if user_id not in storage.all('User'):
         abort(404)
 
     if request.method == 'DELETE':
-        storage.delete(storage.get('State', user_id))
+        storage.delete(storage.get('User', user_id))
         storage.save()
         return(jsonify({}))
 
@@ -53,12 +60,14 @@ def user_by_id(user_id=None):
         put_obj = request.get_json()
         if put_obj is None:
             return("Not a JSON", 400)
-        instance = storage.get('State', user_id)
+        instance = storage.get('User', user_id)
+        ignore_keys = ['id', 'email', 'created_at', 'updated_at']
         for attrib in put_obj:
-            setattr(instance, attrib, put_obj[attrib])
+            if attrib not in ignore_keys:
+                setattr(instance, attrib, put_obj[attrib])
         instance.save()
         return(jsonify(instance.to_json()))
 
     """Default: GET request returns the object in json form"""
-    instance = storage.get('State', user_id)
+    instance = storage.get('User', user_id)
     return(jsonify(instance.to_json()))
