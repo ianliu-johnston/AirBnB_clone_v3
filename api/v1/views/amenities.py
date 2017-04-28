@@ -17,7 +17,7 @@ def all_amenities():
         if 'name' not in posted_obj:
             return("Missing name", 400)
         new_obj = Amenity(**posted_obj)
-        storage.save()
+        new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
 
     rtn_json = []
@@ -44,8 +44,10 @@ def amenity_by_id(amenity_id=None):
         if put_obj is None:
             return("Not a JSON", 400)
         instance = storage.get('Amenity', amenity_id)
+        ignore_keys = ['id', 'created_at', 'updated_at']
         for attrib in put_obj:
-            setattr(instance, attrib, put_obj[attrib])
+            if attrib not in ignore_keys:
+                setattr(instance, attrib, put_obj[attrib])
         instance.save()
         return(jsonify(instance.to_json()))
 
