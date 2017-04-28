@@ -29,7 +29,7 @@ def places_by_city(city_id):
             abort(404)
         if 'name' not in posted_obj:
             return("Missing name", 400)
-        posted_obj.update({ 'city_id': city_id })
+        posted_obj.update({'city_id': city_id})
         new_obj = Place(**posted_obj)
         new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
@@ -66,7 +66,7 @@ def place_by_id(place_id=None):
         if put_obj is None:
             return("Not a JSON", 400)
         instance = storage.get('Place', place_id)
-        ignore_keys = [ 'id', 'user_id', 'city_id', 'created_at', 'updated_at']
+        ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
         for attrib in put_obj:
             if attrib not in ignore_keys:
                 setattr(instance, attrib, put_obj[attrib])
