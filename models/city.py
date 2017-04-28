@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import models
 from models.base_model import BaseModel, Base, Table, Column, String
 from sqlalchemy import ForeignKey
 from os import getenv
@@ -26,3 +27,12 @@ class City(BaseModel, Base):
         Initializes from BaseModel
         """
         super().__init__(*args, **kwargs)
+
+    @property
+    def places(self):
+        """
+        returns all places in a city
+        """
+        all_places = models.storage.all('Place').values()
+        result = [place for place in all_places if place.city_id == self.id]
+        return (result)
