@@ -100,7 +100,82 @@ Classes that are currently supported include BaseModel, User, City, State, Ameni
 
 
 #### API Access
-* API -- interaction with the objects through HTTP GET requests
+API -- interaction with the objects through HTTP GET requests
+
+
+The following is an example of the process to lookup objects with GET requests and create a new place object with a POST request
+
+
+```
+(bash)~> curl -X GET http://0.0.0.0:5000/api/v1/states
+[
+  {
+    "__class__": "State", 
+    "created_at": "2017-03-25T19:44:42", 
+    "id": "421a55f4-7d82-47d9-b54c-a76916479547", 
+    "name": "California", 
+    "updated_at": "2017-03-25T19:44:42"
+  }, 
+  {
+    "__class__": "State", 
+    "created_at": "2017-03-25T19:44:42", 
+    "id": "421a55f4-7d82-47d9-b54c-a76916479552", 
+    "name": "Illinois", 
+    "updated_at": "2017-03-25T19:44:42"
+  }
+]
+(bash)~> curl -X GET http://0.0.0.0:5000/api/v1/states/421a55f4-7d82-47d9-b54c-a76916479552/cities
+[
+  {
+    "__class__": "City", 
+    "created_at": "2017-03-25T19:44:42", 
+    "id": "531a55f4-7d82-47d9-b54c-a76916479554", 
+    "name": "Baton rouge", 
+    "state_id": "421a55f4-7d82-47d9-b54c-a76916479554", 
+    "updated_at": "2017-03-25T19:44:42"
+  }, 
+  {
+    "__class__": "City", 
+    "created_at": "2017-03-25T19:44:42", 
+    "id": "541a55f4-7d82-47d9-b54c-a76916479554", 
+    "name": "Lafayette", 
+    "state_id": "421a55f4-7d82-47d9-b54c-a76916479554", 
+    "updated_at": "2017-03-25T19:44:42"
+  }
+]
+curl -X GET http://0.0.0.0:5000/api/v1/cities/531a55f4-7d82-47d9-b54c-a76916479554/
+{
+  "__class__": "City", 
+  "created_at": "2017-03-25T19:44:42", 
+  "id": "531a55f4-7d82-47d9-b54c-a76916479554", 
+  "name": "Baton rouge", 
+  "state_id": "421a55f4-7d82-47d9-b54c-a76916479554", 
+  "updated_at": "2017-03-25T19:44:42"
+}
+curl -X GET http://0.0.0.0:5000/api/v1/users
+[
+  {
+    "__class__": "User", 
+    "created_at": "2017-04-27T13:08:49", 
+    "email": "foo@eve.com", 
+    "first_name": "Eve", 
+    "id": "12cabb5b-dcdb-4b6a-8988-5153c3a61da0", 
+    "last_name": null, 
+    "password": "flowers", 
+    "updated_at": "2017-04-27T13:08:49"
+  }
+]
+
+curl -X POST http://0.0.0.0:5000/api/v1/cities/531a55f4-7d82-47d9-b54c-a76916479554/places -H "Content-Type: application/json" -d '{ "user_id": "12cabb5b-dcdb-4b6a-8988-5153c3a61da0", "name": "Somewhere_strange" }'
+{
+  "__class__": "Place", 
+  "created_at": "2017-04-28T02:57:52.308374", 
+  "id": "1b916f53-7f97-445e-a266-36466c889fb6", 
+  "name": "Somewhere_strange", 
+  "user_id": "1e8e8a2e-7bc7-41b4-80b5-7bc9e907dccd"
+}
+
+```
 
 #### Front End Webserver
 * Front end -- Website to display 
