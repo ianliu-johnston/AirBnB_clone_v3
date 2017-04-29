@@ -62,8 +62,10 @@ def get_city_obj(city_id=None):
         if put_obj is None:
             return("Not a JSON", 400)
         instance = storage.get('City', city_id)
+        ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
         for attrib in put_obj:
-            setattr(instance, attrib, put_obj[attrib])
+            if attrib not in ignore_keys:
+                setattr(instance, attrib, put_obj[attrib])
         instance.save()
         return(jsonify(instance.to_json()))
 

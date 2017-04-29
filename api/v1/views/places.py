@@ -29,8 +29,8 @@ def places_by_city(city_id):
             abort(404)
         if 'name' not in posted_obj:
             return("Missing name", 400)
-        posted_obj.update({'city_id': city_id})
         new_obj = Place(**posted_obj)
+        new_obj.city_id = city_id
         new_obj.save()
         return(jsonify(new_obj.to_json()), 201)
 
